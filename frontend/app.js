@@ -1,3 +1,5 @@
+let goalsChart = null;
+
 async function loadStats() {
     const response = await fetch("http://127.0.0.1:8000/stats");
     const data = await response.json();
@@ -67,4 +69,30 @@ async function loadRankings() {
     document.getElementById("output").innerHTML = html;
 }
 
+async function loadGoalsChart() {
+    const response = await fetch("http://127.0.0.1:8000/rankings");
+    const data = await response.json();
+
+    const teams = data.map(team => team.team);
+    const goals = data.map(team => team.goals_scored);
+
+    const ctx = document.getElementById("goalsChart");
+
+    if (goalsChart) {
+        goalsChart.destroy();
+    }
+
+    goalsChart = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: teams,
+            datasets: [{
+                label: "Goals Scored",
+                data: goals
+            }]
+        }
+    });
+}
+
 loadStats();
+loadGoalsChart();
