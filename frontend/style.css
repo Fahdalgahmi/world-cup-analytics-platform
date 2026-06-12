@@ -1,33 +1,120 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 40px;
-    background-color: #f4f4f4;
+* {
+    box-sizing: border-box;
 }
 
-h1 {
-    color: #222;
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #0f172a, #111827, #1e293b);
+    color: #f8fafc;
+    min-height: 100vh;
+}
+
+header {
+    padding: 50px 40px;
+    background: linear-gradient(135deg, #7f1d1d, #991b1b, #111827);
+    border-bottom: 4px solid #facc15;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 42px;
+    letter-spacing: 1px;
+}
+
+header p {
+    margin-top: 12px;
+    font-size: 18px;
+    color: #fde68a;
+}
+
+.buttons {
+    margin: 35px 40px;
 }
 
 button {
-    padding: 10px 15px;
-    margin-right: 10px;
+    padding: 14px 22px;
+    margin-right: 12px;
+    border: none;
+    border-radius: 999px;
+    background: #facc15;
+    color: #111827;
+    font-weight: bold;
     cursor: pointer;
+    box-shadow: 0 8px 20px rgba(250, 204, 21, 0.25);
+}
+
+button:hover {
+    transform: translateY(-2px);
+    background: #fde047;
 }
 
 #output {
-    margin-top: 25px;
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
+    margin: 0 40px 40px;
+}
+
+h2 {
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.cards {
+    display: flex;
+    gap: 22px;
+    flex-wrap: wrap;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 25px;
+    border-radius: 18px;
+    width: 240px;
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.card h3 {
+    margin: 0;
+    color: #fde68a;
+}
+
+.card p {
+    font-size: 36px;
+    font-weight: bold;
+    margin: 12px 0 0;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+}
+
+th {
+    background: #facc15;
+    color: #111827;
+    font-weight: bold;
 }
 
 th, td {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
+    padding: 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
     text-align: left;
+}
+
+tr:hover {
+    background: rgba(255,255,255,0.08);
+}
+
+.team-name {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+td:first-child {
+    font-weight: bold;
+    color: #facc15;
 }
