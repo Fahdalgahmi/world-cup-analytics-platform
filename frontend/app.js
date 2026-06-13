@@ -83,16 +83,69 @@ async function loadGoalsChart() {
     }
 
     goalsChart = new Chart(ctx, {
-        type: "bar",
+        type: "doughnut",
         data: {
             labels: teams,
             datasets: [{
                 label: "Goals Scored",
-                data: goals
+                data: goals,
+                borderWidth: 3
             }]
+        },
+        options: {
+            plugins: {
+                legend: {
+                    position: "right"
+                }
+            }
         }
     });
 }
+
+async function searchTeam() {
+    const teamName = document.getElementById("teamInput").value;
+
+    if (teamName.trim() === "") {
+        alert("Please enter a team name");
+        return;
+    }
+
+    const response = await fetch(`http://127.0.0.1:8000/team/${teamName}`);
+    const data = await response.json();
+
+    if (data.error) {
+        document.getElementById("output").innerHTML = `
+            <h2>Team Not Found</h2>
+            <p>Please try another team.</p>
+        `;
+        return;
+    }
+
+    document.getElementById("output").innerHTML = `
+    <h2>${data.team} Team Analysis</h2>
+
+    <div class="cards">
+        <div class="card">
+            <h3>Matches</h3>
+            <p>${data.matches_played}</p>
+        </div>
+
+        <div class="card">
+            <h3>Wins</h3>
+            <p>${data.wins}</p>
+        </div>
+
+        <div class="card">
+            <h3>Draws</h3>
+            <p>${data.draws}</p>
+        </div>
+
+        <div class="card">
+            <h3>Points</h3>
+            <p>${data.points}</p>
+        </div>
+    </div>
+`;}
 
 loadStats();
 loadGoalsChart();

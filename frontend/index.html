@@ -16,10 +16,14 @@
         <button onclick="loadRankings()">Load Rankings</button>
     </div>
 
-  <div class="chart-box">
-    <h2>Goals Scored by Team</h2>
-    <canvas id="goalsChart"></canvas>
+    <div class="search-box">
+    <input type="text" id="teamInput" placeholder="Search team, example: Argentina">
+    <button onclick="searchTeam()">Search Team</button>
 </div>
+
+  <div class="chart-box">
+    <h2>Goal Share by Team</h2>    <canvas id="goalsChart"></canvas>
+    </div>
 
 <div id="output"></div>
 

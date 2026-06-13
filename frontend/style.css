@@ -283,3 +283,22 @@ td:last-child {
         flex-direction: column;
     }
 }
+
+.search-box {
+    display: flex;
+    gap: 12px;
+    margin: 0 50px 35px;
+}
+
+.search-box input {
+    padding: 14px 18px;
+    width: 320px;
+    border: 2px solid #38bdf8;
+    border-radius: 999px;
+    font-size: 15px;
+    outline: none;
+}
+
+.search-box input:focus {
+    border-color: #f59e0b;
+}
