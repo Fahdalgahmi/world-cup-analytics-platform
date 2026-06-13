@@ -175,7 +175,58 @@ async function loadGoalsChart() {
     }
 }
 
+
+
+async function compareTeams() {
+    const teamOne = document.getElementById("teamOne").value;
+    const teamTwo = document.getElementById("teamTwo").value;
+
+    if (teamOne.trim() === "" || teamTwo.trim() === "") {
+        alert("Please enter both teams");
+        return;
+    }
+
+    const responseOne = await fetch(`http://127.0.0.1:8000/team/${teamOne}`);
+    const responseTwo = await fetch(`http://127.0.0.1:8000/team/${teamTwo}`);
+
+    const dataOne = await responseOne.json();
+    const dataTwo = await responseTwo.json();
+
+    if (dataOne.error || dataTwo.error) {
+        document.getElementById("output").innerHTML = `
+            <h2>Team Not Found</h2>
+            <p>Please check both team names.</p>
+        `;
+        return;
+    }
+
+    document.getElementById("output").innerHTML = `
+        <h2>${dataOne.team} vs ${dataTwo.team}</h2>
+
+        <div class="comparison-grid">
+            <div class="compare-card">
+                <h3>${dataOne.team}</h3>
+                <p>Points: ${dataOne.points}</p>
+                <p>Wins: ${dataOne.wins}</p>
+                <p>Draws: ${dataOne.draws}</p>
+                <p>Losses: ${dataOne.losses}</p>
+                <p>Goals Scored: ${dataOne.goals_scored}</p>
+                <p>Goals Allowed: ${dataOne.goals_allowed}</p>
+            </div>
+
+            <div class="compare-card">
+                <h3>${dataTwo.team}</h3>
+                <p>Points: ${dataTwo.points}</p>
+                <p>Wins: ${dataTwo.wins}</p>
+                <p>Draws: ${dataTwo.draws}</p>
+                <p>Losses: ${dataTwo.losses}</p>
+                <p>Goals Scored: ${dataTwo.goals_scored}</p>
+                <p>Goals Allowed: ${dataTwo.goals_allowed}</p>
+            </div>
+        </div>
+    `;
+}
+
 window.addEventListener("load", function () {
-    loadStats();
     loadGoalsChart();
 });
