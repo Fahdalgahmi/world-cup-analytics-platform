@@ -133,11 +133,14 @@ def get_rankings():
     rankings = []
 
     for team in teams:
-        rankings.append(get_team(team))
+        team_data = get_team(team)
+
+        if "error" not in team_data:
+            rankings.append(team_data)
 
     rankings = sorted(
         rankings,
-        key=lambda x: (x["points"], x["goals_scored"] - x["goals_allowed"]),
+        key=lambda x: (x.get("points", 0), x.get("goals_scored", 0) - x.get("goals_allowed", 0)),
         reverse=True
     )
 

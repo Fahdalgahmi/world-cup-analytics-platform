@@ -1,105 +1,90 @@
 let goalsChart = null;
 
 async function loadStats() {
-    const response = await fetch("http://127.0.0.1:8000/stats");
-    const data = await response.json();
+    try {
+        const response = await fetch("http://127.0.0.1:8000/stats");
+        const data = await response.json();
 
-    document.getElementById("output").innerHTML = `
-        <h2>Statistics</h2>
+        document.getElementById("output").innerHTML = `
+            <h2>Statistics</h2>
 
-        <div class="cards">
-            <div class="card">
-                <h3>Total Matches</h3>
-                <p>${data.total_matches}</p>
+            <div class="cards">
+                <div class="card">
+                    <h3>Total Matches</h3>
+                    <p>${data.total_matches}</p>
+                </div>
+
+                <div class="card">
+                    <h3>Total Goals</h3>
+                    <p>${data.total_goals}</p>
+                </div>
+
+                <div class="card">
+                    <h3>Average Goals</h3>
+                    <p>${data.average_goals_per_match}</p>
+                </div>
             </div>
-
-            <div class="card">
-                <h3>Total Goals</h3>
-                <p>${data.total_goals}</p>
-            </div>
-
-            <div class="card">
-                <h3>Average Goals</h3>
-                <p>${data.average_goals_per_match}</p>
-            </div>
-        </div>
-    `;
+        `;
+    } catch (error) {
+        console.error("Stats error:", error);
+        document.getElementById("output").innerHTML = `<p>Stats failed to load.</p>`;
+    }
 }
 
 async function loadRankings() {
-    const response = await fetch("http://127.0.0.1:8000/rankings");
-    const data = await response.json();
+    try {
+        const response = await fetch("http://127.0.0.1:8000/rankings");
+        const data = await response.json();
 
-    const flags = {
-        "Argentina": "🇦🇷",
-        "France": "🇫🇷",
-        "Morocco": "🇲🇦",
-        "Brazil": "🇧🇷",
-        "Croatia": "🇭🇷",
-        "Portugal": "🇵🇹",
-        "England": "🏴"
-    };
+        const flags = {
+            "Argentina": "🇦🇷",
+            "France": "🇫🇷",
+            "Morocco": "🇲🇦",
+            "Brazil": "🇧🇷",
+            "Croatia": "🇭🇷",
+            "Portugal": "🇵🇹",
+            "England": "🏴",
+            "Netherlands": "🇳🇱",
+            "South Korea": "🇰🇷",
+            "Switzerland": "🇨🇭",
+            "Senegal": "🇸🇳",
+            "Poland": "🇵🇱",
+            "Spain": "🇪🇸",
+            "Japan": "🇯🇵",
+            "Australia": "🇦🇺",
+            "USA": "🇺🇸"
+        };
 
-    let html = `
-        <h2>Team Rankings</h2>
-        <table>
-            <tr>
-                <th>Rank</th>
-                <th>Team</th>
-                <th>Points</th>
-                <th>Goals Scored</th>
-                <th>Goals Allowed</th>
-            </tr>
-    `;
-
-    data.forEach((team, index) => {
-        html += `
-            <tr>
-                <td>#${index + 1}</td>
-                <td class="team-name">${flags[team.team] || "🏳️"} ${team.team}</td>
-                <td>${team.points}</td>
-                <td>${team.goals_scored}</td>
-                <td>${team.goals_allowed}</td>
-            </tr>
+        let html = `
+            <h2>Team Rankings</h2>
+            <table>
+                <tr>
+                    <th>Rank</th>
+                    <th>Team</th>
+                    <th>Points</th>
+                    <th>Goals Scored</th>
+                    <th>Goals Allowed</th>
+                </tr>
         `;
-    });
 
-    html += `</table>`;
+        data.forEach((team, index) => {
+            html += `
+                <tr>
+                    <td>#${index + 1}</td>
+                    <td class="team-name">${flags[team.team] || "🏳️"} ${team.team}</td>
+                    <td>${team.points}</td>
+                    <td>${team.goals_scored}</td>
+                    <td>${team.goals_allowed}</td>
+                </tr>
+            `;
+        });
 
-    document.getElementById("output").innerHTML = html;
-}
-
-async function loadGoalsChart() {
-    const response = await fetch("http://127.0.0.1:8000/rankings");
-    const data = await response.json();
-
-    const teams = data.map(team => team.team);
-    const goals = data.map(team => team.goals_scored);
-
-    const ctx = document.getElementById("goalsChart");
-
-    if (goalsChart) {
-        goalsChart.destroy();
+        html += `</table>`;
+        document.getElementById("output").innerHTML = html;
+    } catch (error) {
+        console.error("Rankings error:", error);
+        document.getElementById("output").innerHTML = `<p>Rankings failed to load.</p>`;
     }
-
-    goalsChart = new Chart(ctx, {
-        type: "doughnut",
-        data: {
-            labels: teams,
-            datasets: [{
-                label: "Goals Scored",
-                data: goals,
-                borderWidth: 3
-            }]
-        },
-        options: {
-            plugins: {
-                legend: {
-                    position: "right"
-                }
-            }
-        }
-    });
 }
 
 async function searchTeam() {
@@ -122,30 +107,75 @@ async function searchTeam() {
     }
 
     document.getElementById("output").innerHTML = `
-    <h2>${data.team} Team Analysis</h2>
+        <h2>${data.team} Team Analysis</h2>
 
-    <div class="cards">
-        <div class="card">
-            <h3>Matches</h3>
-            <p>${data.matches_played}</p>
+        <div class="cards">
+            <div class="card">
+                <h3>Matches</h3>
+                <p>${data.matches_played}</p>
+            </div>
+
+            <div class="card">
+                <h3>Wins</h3>
+                <p>${data.wins}</p>
+            </div>
+
+            <div class="card">
+                <h3>Draws</h3>
+                <p>${data.draws}</p>
+            </div>
+
+            <div class="card">
+                <h3>Points</h3>
+                <p>${data.points}</p>
+            </div>
         </div>
+    `;
+}
 
-        <div class="card">
-            <h3>Wins</h3>
-            <p>${data.wins}</p>
-        </div>
+async function loadGoalsChart() {
+    try {
+        const response = await fetch("http://127.0.0.1:8000/rankings");
+        const data = await response.json();
 
-        <div class="card">
-            <h3>Draws</h3>
-            <p>${data.draws}</p>
-        </div>
+        const teams = data.map(team => team.team);
+        const goals = data.map(team => team.goals_scored);
 
-        <div class="card">
-            <h3>Points</h3>
-            <p>${data.points}</p>
-        </div>
-    </div>
-`;}
+        const ctx = document.getElementById("goalsChart");
 
-loadStats();
-loadGoalsChart();
+        if (!ctx) {
+            console.error("goalsChart canvas not found");
+            return;
+        }
+
+        if (goalsChart) {
+            goalsChart.destroy();
+        }
+
+        goalsChart = new Chart(ctx, {
+            type: "doughnut",
+            data: {
+                labels: teams,
+                datasets: [{
+                    label: "Goals Scored",
+                    data: goals,
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        position: "right"
+                    }
+                }
+            }
+        });
+    } catch (error) {
+        console.error("Chart error:", error);
+    }
+}
+
+window.addEventListener("load", function () {
+    loadStats();
+    loadGoalsChart();
+});
