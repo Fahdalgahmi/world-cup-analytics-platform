@@ -1,39 +1,78 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>World Cup Analytics</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
+<header class="top-nav">
+    <div class="logo">⚽ World Cup Analytics</div>
+    <nav>
+        <button onclick="loadStats()">Stats</button>
+        <button onclick="loadRankings()">Rankings</button>
+        <button onclick="loadMatches()">Matches</button>
+        <button onclick="loadGoalsChart()">Goals Chart</button>    
+        <button onclick="loadRealMatches()">Live Matches</button>
+    </nav>
+</header>
 
-    <header>
-        <h1>World Cup Analytics Dashboard</h1>
+<section class="match-strip">
+    <div class="match-pill">🇦🇷 ARG 3-0 CRO</div>
+    <div class="match-pill">🇧🇷 BRA 1-1 MAR</div>
+    <div class="match-pill">🇺🇸 USA 4-1 PAR</div>
+    <div class="match-pill">🇫🇷 FRA 2-1 ENG</div>
+    <div class="match-pill">🇲🇦 MAR 1-0 POR</div>
+</section>
+
+<section class="hero">
+    <div>
+        <p class="tag">FIFA World Cup Historical Analytics</p>
+        <h1>World Cup Analytics</h1>
         <p>Team rankings, match statistics, and tournament insights</p>
-    </header>
+        <p>Historical rankings, team comparisons, match insights, and tournament statistics based on real World Cup data.</p>    </div>
+</section>
 
-    <div class="buttons">
-        <button onclick="loadStats()">Load Stats</button>
-        <button onclick="loadRankings()">Load Rankings</button>
+<section id="summary-cards" class="summary-cards"></section>
+
+<section class="featured-match">
+    <div class="featured-content">
+        <span>Featured Match</span>
+        <h2>Argentina 3 - 0 Croatia</h2>
+        <p>Argentina advanced to the final after a dominant performance against Croatia.</p>
     </div>
+</section>
 
-    <div class="search-box">
-    <input type="text" id="teamInput" placeholder="Search team, example: Argentina">
-    <button onclick="searchTeam()">Search Team</button>
-</div>
+<section id="dynamic-matches" class="dynamic-matches"></section>
+
+
+
 <div class="compare-box">
-    <input type="text" id="teamOne" placeholder="First team: Argentina">
-    <input type="text" id="teamTwo" placeholder="Second team: France">
-    <button onclick="compareTeams()">Compare Teams</button>
+    <h2>Compare Teams</h2>
+    <input type="text" id="team1" placeholder="Argentina">
+    <input type="text" id="team2" placeholder="Brazil">
+    <button onclick="compareTeams()">Compare</button>
 </div>
 
-  <div class="chart-box">
-    <h2>Goal Share by Team</h2>    <canvas id="goalsChart"></canvas>
-    </div>
+<div class="chart-card">
+    <canvas id="goalsChart"></canvas>
+</div>
 
-<div id="output"></div>
+<div class="radar-card">
+    <canvas id="radarChart"></canvas>
+</div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="app.js"></script>
+<section id="output"></section>
+
+
+<footer>
+    <p>World Cup Analytics Dashboard | Built by Fahd Algahmi</p>
+</footer>
+
+<script src="./script.js"></script>
 
 </body>
 </html>
