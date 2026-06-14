@@ -1,5 +1,4 @@
-const API_URL = "http://127.0.0.1:8000";
-
+const API_URL = "https://world-cup-analytics-api.onrender.com";
 let goalsChart = null;
 let radarChart = null;
 
